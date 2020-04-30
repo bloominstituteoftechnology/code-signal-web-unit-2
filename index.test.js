@@ -24,7 +24,7 @@ function divMaker(attributes, textContent) {
 }
 
 describe('Unit 2:1 - Applied JavaScript', () => {
-  test('divMaker', () => {
+  test('divMaker works', () => {
     const div = divMaker({ id: 'foo', class: 'bar baz' }, 'lady gaga')
 
     expect(div.id).toBe('foo')
@@ -54,25 +54,51 @@ function LightSwitch({ on }) {
 
 function Switches({ number }) {
   const switches = Array.from(Array(number).keys())
-  return <div>{switches.map((_, idx) => <LightSwitch key={idx} on={number % 2 === 0} />)}</div>
+  return <div>{switches.map((_, idx) =>
+    <LightSwitch key={idx} on={number % 2 === 0} />)}</div>
 }
 
 describe('Unit 2:2 - Intro to React', () => {
   test('Switches works with even number', () => {
-    const testRenderer = TestRenderer.create(<Switches number={4} />).toJSON()
+    const element = TestRenderer.create(<Switches number={4} />).toJSON()
 
-    testRenderer.children[0].children.forEach(text => {
+    element.children[0].children.forEach(text => {
       expect(text).toMatch(/on/i)
     })
-    expect(testRenderer.children).toHaveLength(4)
+    expect(element.children).toHaveLength(4)
   })
 
   test('Switches works with odd number', () => {
-    const testRenderer = TestRenderer.create(<Switches number={3} />).toJSON()
+    const element = TestRenderer.create(<Switches number={3} />).toJSON()
 
-    expect(testRenderer.children).toHaveLength(3)
-    testRenderer.children[0].children.forEach(text => {
+    expect(element.children).toHaveLength(3)
+    element.children[0].children.forEach(text => {
       expect(text).toMatch(/off/i)
     })
+  })
+})
+
+/*
+Unit 2:3 - Single Page Applications
+
+Write a React component called "TrimmedInput".
+
+It receives a prop called "value" (a string) and another called "type" (a string).
+It returns a single input of the specified "type".
+The value of the input must be the supplied "value" prop
+with any leading and trailing whitespace trimmed out.
+*/
+function TrimmedInput({ type, value }) {
+  return <input type={type} value={value.trim()} />
+}
+
+describe('Unit 2:3 - Single Page Applications', () => {
+  test('TrimmedInput works', () => {
+    const element = TestRenderer.create(
+      <TrimmedInput type="text" value="  foo  " />
+    ).toJSON()
+
+    expect(element.props.value).toEqual('foo')
+    expect(element.props.type).toEqual('text')
   })
 })
