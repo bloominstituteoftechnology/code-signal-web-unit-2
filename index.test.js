@@ -13,7 +13,6 @@ Example of usage:
 
 const div = divMaker({ id: 'greet' }, 'Hello, World')
 console.log(div) // <div id="greet">Hello, World</div>
-
 */
 function divMaker(attributes, textContent) {
   const div = document.createElement('div')
@@ -48,12 +47,11 @@ If "on" has a value of false, the component returns a "p" tag with the text "The
 It expects a "number" prop which is a number.
 It returns one "div" tag containing "n" LightSwitches, where "n" is equal to the value of "number".
 If "n" is an even number, all LightSwitches are on. Otherwise all LightSwitches are off.
-
 */
-
 function LightSwitch({ on }) {
   return <p>{on ? 'The switch is on!' : 'The switch is off'}</p>
 }
+
 function Switches({ number }) {
   const switches = Array.from(Array(number).keys())
   return <div>{switches.map((_, idx) => <LightSwitch key={idx} on={number % 2 === 0} />)}</div>
